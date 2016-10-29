@@ -1,19 +1,49 @@
 .main-nav
-  display: table
-  table-layout: fixed
+  position: fixed
+  z-index: 10
+  left: 0
+  right: 0
+  top: 0
+  +vertical-padding(2)
+  will-change: transform
+  transition: transform 200ms linear
+
+  &.headroom--pinned
+    transform: translateY(0%)
+
+  &.headroom--unpinned
+    transform: translateY(-100%)
+
+  &.headroom--not-top
+    background: linear-gradient(0deg, rgba(#1a1513, 0.8), rgba(#13100e, 0.9))
+
+.main-nav__inner
+  display: flex
+  justify-content: space-between
   width: 100%
-  +font-size(sigma)
 
 .main-nav__nav-item
-  display: table-cell
   vertical-align: middle
   text-decoration: none
   text-transform: uppercase
   text-align: center
+  color: white
+  position: relative
   +heading-font-family
 
-  &:hover
-    color: black
+  &:after
+    content: ""
+    position: absolute
+    top: 100%
+    margin-top: 5px
+    height: 2px
+    left: 0
+    width: 0
+    background-color: white
+    transition: width 0.2s $material-ease
+
+  &:hover:after
+    width: 100%
 
 .main-nav__hamburger-handle
   display: table-cell

@@ -1,9 +1,11 @@
+//= require headroom
 //= require baguette
 //= require smooth-scroll
 //= require switch-to-video
 
-baguetteBox.run('#js-gallery');
+baguetteBox.run('.js-gallery');
 smoothScroll.init();
+new Headroom(document.querySelector(".main-nav"), { offset: 400 }).init();
 
 var form = document.getElementById('js-contact-form');
 

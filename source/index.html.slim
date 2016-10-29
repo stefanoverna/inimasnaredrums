@@ -1,27 +1,46 @@
 - content_for :head do
   == dato_meta_tags(dato.settings)
+
+.visible--on-desk
+  .main-nav: .wrap: .main-nav__inner
+      = link_to "Prodotti", "#products", class: "main-nav__nav-item", data: { scroll: true }
+      = link_to "Chi siamo", "#about", class: "main-nav__nav-item", data: { scroll: true }
+      = link_to "Galleria", "#gallery", class: "main-nav__nav-item", data: { scroll: true }
+      = link_to "Artisti", "#artists", class: "main-nav__nav-item", data: { scroll: true }
+      = link_to "Video", "#videos", class: "main-nav__nav-item", data: { scroll: true }
+      = link_to "Treedom", "#treedom", class: "main-nav__nav-item", data: { scroll: true }
+      = link_to "Contatti", "#contacts", class: "main-nav__nav-item", data: { scroll: true }
+
 .home
   .wrap
-    .home__fixed.visible--on-desk
-      .main-nav
-        = link_to "Chi siamo", "#about", class: "main-nav__nav-item", data: { scroll: true }
-        = link_to "Prodotti", "#products", class: "main-nav__nav-item", data: { scroll: true }
-        = link_to "Galleria", "#gallery", class: "main-nav__nav-item", data: { scroll: true }
-        = link_to "Treedom", "#treedom", class: "main-nav__nav-item", data: { scroll: true }
-        = link_to "Video", "#videos", class: "main-nav__nav-item", data: { scroll: true }
-        = link_to "Contatti", "#contacts", class: "main-nav__nav-item", data: { scroll: true }
-
     .home__logo: span Inima Snaredrums
     .home__claim= dato.settings.tagline
     .home__social-container
       = link_to "http://www.facebook.com/inimasnaredrums", class: "home__social--facebook", target: "_blank" do
         .icon--facebook
+        span Facebook
       = link_to "https://www.youtube.com/channel/UCtSddr6r2Qleeysii2q47Ig", class: "home__social--youtube", target: "_blank" do
         .icon--youtube
+        span YouTube
       = link_to "https://twitter.com/InimaSnaredrums", class: "home__social--twitter", target: "_blank" do
         .icon--twitter
+        span Twitter
       = link_to "https://www.instagram.com/inimasnaredrums", class: "home__social--instagram", target: "_blank" do
         .icon--instagram
+        span Instagram
+
+#products.products
+  .js-gallery
+    .wrap
+      .grid--wide
+        - dato.series.values.sort_by(&:position).each do |serie|
+          .grid__item.desk-4-12
+            .products__item
+              = link_to(serie.image.url(w: 2000, auto: "compress,format", fm: "jpg", fit: "max"), data: { caption: "#{serie.name} series" }, class: "products__image") do
+                = image_tag serie.image.url(w: 700, auto: "compress,format")
+              h1.products__title= "#{serie.name} series"
+              .products__description
+                == serie.description
 
 #about.about
   .wrap
@@ -29,27 +48,35 @@
       .about__title= dato.settings.about_title
       .formatted-content== dato.settings.about_description
 
-#products.products
-  .wrap
-    .grid--wide
-      - dato.series.values.sort_by(&:position).each do |serie|
-        .grid__item.desk-4-12
-          .products__item
-            .products__image= image_tag serie.image.file.auto("compress", "format").to_url
-            h1.products__title= "#{serie.name} series"
-            .products__description
-              == serie.description
-
 #gallery.gallery
-  #js-gallery
+  .js-gallery
     - dato.products.values.each do |product|
-      - image = product.images.first.image.file
-      = link_to image.width(2000).auto("compress", "format").format("jpg").to_url, data: { caption: "#{product.title} #{product.dimensions}" }, class: "gallery__item" do
+      - image = product.images.first.image
+      = link_to(image.url(w: 2000, auto: "compress,format", fm: "jpg", fit: "max"), data: { caption: "#{product.title} #{product.dimensions}" }, class: "gallery__item") do
         .gallery__item__image
-          = image_tag image.width(700).auto("compress", "format").format("jpg").to_url
+          = image_tag image.url(w: 700, auto: "compress,format", fm: "jpg")
         .gallery__item__label
           p.gallery__item__title= "#{product.title} #{product.dimensions}"
           p= "Serie #{product.series.name} — Spessore fusto #{product.shell_depth}mm"
+
+#artists.artists: .wrap
+  .artists__title Artisti
+  .grid--wide
+    - dato.endorsers.sort_by(&:position).each do |record|
+      .grid__item.desk-4-12
+        .artists__item
+          .artists__item__image= image_tag record.image.url(w: 350, fm: 'jpg')
+          .artists__item__name= record.name
+          .artists__item__bio.formatted-content= record.bio
+
+#videos.gallery.gallery--small
+  - dato.videos.sort_by(&:position).each do |record|
+    = link_to record.video.url, class: "gallery__item", data: { behaviour: "switch-to-video", youtube_id: record.video.provider_uid } do
+      .gallery__item__image
+        = image_tag record.video.thumbnail_url
+        .gallery__item__image__play
+      .gallery__item__label
+        p.gallery__item__title= record.title
 
 #treedom.green
   .wrap
@@ -65,15 +92,6 @@
             = link_to "http://www.treedom.net/it/user/73768/show", class: "button--rev" do
               i.icon--arrow
               span Visualizza la foresta Inima!
-
-#videos.gallery.gallery--small
-  - dato.videos.sort_by(&:position).each do |record|
-    = link_to record.video.url, class: "gallery__item", data: { behaviour: "switch-to-video", youtube_id: record.video.provider_uid } do
-      .gallery__item__image
-        = image_tag record.video.thumbnail_url
-        .gallery__item__image__play
-      .gallery__item__label
-        p.gallery__item__title= record.title
 
 #contacts.contacts
   .wrap
