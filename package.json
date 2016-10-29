@@ -1,0 +1,10 @@
+{
+  "name": "XXX",
+  "version": "0.0.1",
+  "scripts": {
+    "bemo": "bemo-webfonts -s source/fonts/svg -S source/stylesheets/variables/_icon-glyphs.scss -f source/fonts"
+  },
+  "dependencies": {
+    "bemo-webfonts": "1.0.1"
+  }
+}

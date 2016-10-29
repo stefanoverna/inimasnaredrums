@@ -1,0 +1,59 @@
+.gallery
+  margin-top: 3px
+  +clearfix
+
+  img, iframe
+    display: block
+    width: 100%
+
+.gallery__item
+  display: block
+  position: relative
+  text-decoration: none
+  padding-bottom: 3px
+  box-sizing: border-box
+  background-color: white
+
+.gallery__item__title
+  text-transform: uppercase
+  +heading-font-family
+
+.gallery__item__label
+  +position(absolute, null 0 3px 3px)
+  +padding(2)
+  color: white
+  background: linear-gradient(to left, rgba(black, 0), rgba(black, 0.5))
+
+.gallery__item__image
+  position: relative
+
+.gallery__item__image__play
+  +position(absolute, 0 0 0 0)
+  background-color: rgba(black, 0.4)
+
+  &:before
+    @extend .icon--youtube:before
+    +center($extra: scale(1))
+    font-size: 100px
+    line-height: 100px
+    color: white
+    transition: transform 0.2s ease-in-out
+
+  &:hover:before
+    +center($extra: scale(1.2))
+
++at-breakpoint(desk)
+  .gallery
+    margin-left: -3px
+
+  .gallery__item
+    width: 50%
+    float: left
+    padding-left: 3px
+
+  .gallery--small
+    .gallery__item
+      width: (100% / 3)
+
+    .gallery__item__title
+      text-align: center

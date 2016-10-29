@@ -1,0 +1,31 @@
+.products
+  +vertical-padding(7)
+
+.products__image
+  +margin-bottom(3)
+
+  img
+    display: block
+    box-shadow: 0 3px 6px rgba(black, 0.2)
+
+.products__title
+  +heading-font-family
+  +font-size(beta)
+  +margin-bottom(2)
+
+.products__description
+  p
+    +margin-bottom(2)
+
+    &:last-child
+      margin-bottom: 0
+
+.products__item
+  +margin-bottom(5)
+
+  .grid__item:last-child &
+    margin-bottom: 0
+
+  +at-breakpoint(desk)
+    margin-bottom: 0
+

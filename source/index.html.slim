@@ -1,0 +1,106 @@
+- content_for :head do
+  == dato_meta_tags(dato.settings)
+.home
+  .wrap
+    .home__fixed.visible--on-desk
+      .main-nav
+        = link_to "Chi siamo", "#about", class: "main-nav__nav-item", data: { scroll: true }
+        = link_to "Prodotti", "#products", class: "main-nav__nav-item", data: { scroll: true }
+        = link_to "Galleria", "#gallery", class: "main-nav__nav-item", data: { scroll: true }
+        = link_to "Treedom", "#treedom", class: "main-nav__nav-item", data: { scroll: true }
+        = link_to "Video", "#videos", class: "main-nav__nav-item", data: { scroll: true }
+        = link_to "Contatti", "#contacts", class: "main-nav__nav-item", data: { scroll: true }
+
+    .home__logo: span Inima Snaredrums
+    .home__claim= dato.settings.tagline
+    .home__social-container
+      = link_to "http://www.facebook.com/inimasnaredrums", class: "home__social--facebook", target: "_blank" do
+        .icon--facebook
+      = link_to "https://www.youtube.com/channel/UCtSddr6r2Qleeysii2q47Ig", class: "home__social--youtube", target: "_blank" do
+        .icon--youtube
+      = link_to "https://twitter.com/InimaSnaredrums", class: "home__social--twitter", target: "_blank" do
+        .icon--twitter
+      = link_to "https://www.instagram.com/inimasnaredrums", class: "home__social--instagram", target: "_blank" do
+        .icon--instagram
+
+#about.about
+  .wrap
+    .about__inner
+      .about__title= dato.settings.about_title
+      .formatted-content== dato.settings.about_description
+
+#products.products
+  .wrap
+    .grid--wide
+      - dato.series.values.sort_by(&:position).each do |serie|
+        .grid__item.desk-4-12
+          .products__item
+            .products__image= image_tag serie.image.file.auto("compress", "format").to_url
+            h1.products__title= "#{serie.name} series"
+            .products__description
+              == serie.description
+
+#gallery.gallery
+  #js-gallery
+    - dato.products.values.each do |product|
+      - image = product.images.first.image.file
+      = link_to image.width(2000).auto("compress", "format").format("jpg").to_url, data: { caption: "#{product.title} #{product.dimensions}" }, class: "gallery__item" do
+        .gallery__item__image
+          = image_tag image.width(700).auto("compress", "format").format("jpg").to_url
+        .gallery__item__label
+          p.gallery__item__title= "#{product.title} #{product.dimensions}"
+          p= "Serie #{product.series.name} — Spessore fusto #{product.shell_depth}mm"
+
+#treedom.green
+  .wrap
+    .grid--wide.grid--rev.grid--middle
+      .grid__item.desk-6-12
+        .green__image
+          = image_tag "treedom.png"
+      .grid__item.desk-6-12
+        .green__body
+          .green__title= dato.settings.treedom_title
+          .green__description== dato.settings.treedom_description
+          .green__link
+            = link_to "http://www.treedom.net/it/user/73768/show", class: "button--rev" do
+              i.icon--arrow
+              span Visualizza la foresta Inima!
+
+#videos.gallery.gallery--small
+  - dato.videos.sort_by(&:position).each do |record|
+    = link_to record.video.url, class: "gallery__item", data: { behaviour: "switch-to-video", youtube_id: record.video.provider_uid } do
+      .gallery__item__image
+        = image_tag record.video.thumbnail_url
+        .gallery__item__image__play
+      .gallery__item__label
+        p.gallery__item__title= record.title
+
+#contacts.contacts
+  .wrap
+    .grid--wide.grid--middle
+      .grid__item.desk-5-12
+        .contacts__body
+          .space--bottom-2
+            h6.beta= dato.settings.contacts_title
+          = dato.settings.contacts_description
+
+      .grid__item.desk-6-12.desk-push-1-12
+        .contacts__form
+          form.form#js-contact-form
+            .form__field
+              label.form__label for="name" Il tuo nome *
+              input type="text" name="name" id="name" placeholder="Nome Cognome"
+            .form__field
+              label.form__label for="email" Indirizzo email *
+              input type="email" name="email" id="email" placeholder="tuo@indirizzo.com"
+            .form__field
+              label.form__label for="phone" Recapito telefonico
+              input type="tel" name="phone" id="phone" placeholder="+39 123-4567890"
+            .form__field
+              label.form__label for="message" Messaggio *
+              textarea id="message" name="message" placeholder="Inserisci qui il tuo messaggio"
+
+            .form__actions
+              button.button
+                i.icon--send
+                span Invia richiesta

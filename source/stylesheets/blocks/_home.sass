@@ -1,0 +1,63 @@
+.home
+  text-align: center
+  background: image-url("bg.jpg") no-repeat center center
+  background-size: cover
+  +vertical-padding(5)
+
+.home__fixed
+  +margin-bottom(5)
+
+.home__logo
+  background: image-url("logo.png") no-repeat center center
+  background-size: contain
+  height: 150px
+
+  &:before
+    content: ""
+    display: block
+    padding-top: 60%
+
+  span
+    display: none
+
+  +at-breakpoint(desk)
+    height: 200px
+
+.home__claim
+  +margin-top(2)
+  +heading-font-family
+  +font-size(gamma)
+  letter-spacing: 0.7em
+
+.home__social-container
+  +margin-top(2)
+
+.home__social
+  display: inline-block
+  margin: 0 10px
+  transition: transform 0.3s $material-ease
+
+  +at-breakpoint(desk)
+    margin: 0 30px
+
+  &:hover
+    transform: scale(1.3)
+
+  [class^=icon]
+    font-size: 40px
+
+.home__social--twitter
+  @extend .home__social
+  color: #55acee
+
+.home__social--facebook
+  @extend .home__social
+  color: #3b5998
+
+.home__social--youtube
+  @extend .home__social
+  color: #bb0000
+
+.home__social--instagram
+  @extend .home__social
+  color: #125688

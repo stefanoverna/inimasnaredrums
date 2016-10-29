@@ -1,0 +1,13 @@
+| <!doctype html>
+html
+  head
+    meta content="IE=edge" http-equiv="X-UA-Compatible"
+    meta charset="utf-8"
+    meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"
+    = yield_content :head
+    = stylesheet_link_tag :application
+  body class=( yield_content :page_class )
+    = yield
+    .credits Built with <a href="https://www.datocms.com">DatoCMS - CMS for Middleman sites</a>
+    = javascript_include_tag :application
+

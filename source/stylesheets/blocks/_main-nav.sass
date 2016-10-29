@@ -1,0 +1,23 @@
+.main-nav
+  display: table
+  table-layout: fixed
+  width: 100%
+  +font-size(sigma)
+
+.main-nav__nav-item
+  display: table-cell
+  vertical-align: middle
+  text-decoration: none
+  text-transform: uppercase
+  text-align: center
+  +heading-font-family
+
+  &:hover
+    color: black
+
+.main-nav__hamburger-handle
+  display: table-cell
+  vertical-align: middle
+  text-align: right
+  font-size: 40px
+

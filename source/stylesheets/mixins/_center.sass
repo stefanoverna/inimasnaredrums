@@ -1,0 +1,16 @@
+@mixin center-vertically($position: absolute, $extra: "")
+  position: $position
+  top: 50%
+  transform: translateY(-50%) #{$extra}
+
+@mixin center-horizontally($position: absolute, $extra: "")
+  position: $position
+  left: 50%
+  transform: translateX(-50%) #{$extra}
+
+@mixin center($position: absolute, $extra: "")
+  position: $position
+  left: 50%
+  top: 50%
+  transform: translate(-50%, -50%) #{$extra}
+
