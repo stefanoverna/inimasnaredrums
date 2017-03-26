@@ -5,6 +5,7 @@ gem 'middleman-livereload'
 gem 'middleman-search_engine_sitemap'
 gem 'middleman-autoprefixer'
 gem "middleman-dato"
+gem "dato", "0.3.9.1"
 
 gem 'sass'
 gem 'sass-globbing'
