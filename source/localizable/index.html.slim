@@ -3,13 +3,16 @@
 
 .visible--on-desk
   .main-nav: .wrap: .main-nav__inner
-      = link_to "Prodotti", "#products", class: "main-nav__nav-item", data: { scroll: true }
-      = link_to "Chi siamo", "#about", class: "main-nav__nav-item", data: { scroll: true }
-      = link_to "Galleria", "#gallery", class: "main-nav__nav-item", data: { scroll: true }
-      = link_to "Artisti", "#artists", class: "main-nav__nav-item", data: { scroll: true }
-      = link_to "Video", "#videos", class: "main-nav__nav-item", data: { scroll: true }
-      = link_to "Treedom", "#treedom", class: "main-nav__nav-item", data: { scroll: true }
-      = link_to "Contatti", "#contacts", class: "main-nav__nav-item", data: { scroll: true }
+    = link_to I18n.t("products"), "#products", class: "main-nav__nav-item", data: { scroll: true }
+    = link_to I18n.t("about"), "#about", class: "main-nav__nav-item", data: { scroll: true }
+    = link_to I18n.t("gallery"), "#gallery", class: "main-nav__nav-item", data: { scroll: true }
+    = link_to I18n.t("artists"), "#artists", class: "main-nav__nav-item", data: { scroll: true }
+    = link_to I18n.t("videos"), "#videos", class: "main-nav__nav-item", data: { scroll: true }
+    = link_to I18n.t("treedom"), "#treedom", class: "main-nav__nav-item", data: { scroll: true }
+    = link_to I18n.t("contact"), "#contacts", class: "main-nav__nav-item", data: { scroll: true }
+    .main-nav__language-switch
+      = link_to "Italiano", "/", class: "main-nav__nav-item"
+      = link_to "English", "/en", class: "main-nav__nav-item"
 
 .home
   .wrap
@@ -29,6 +32,12 @@
         .icon--instagram
         span Instagram
 
+#about.about
+  .wrap
+    .about__inner
+      .about__title= dato.settings.about_title
+      .formatted-content== dato.settings.about_description
+
 #products.products
   .js-gallery
     .wrap
@@ -36,31 +45,25 @@
         - dato.series.values.sort_by(&:position).each do |serie|
           .grid__item.desk-4-12
             .products__item
-              = link_to(serie.image.url(w: 2000, auto: "compress,format", fm: "jpg", fit: "max"), data: { caption: "#{serie.name} series" }, class: "products__image") do
-                = image_tag serie.image.url(w: 700, auto: "compress,format")
+              = link_to(serie.image.url(w: 2000, auto: "compress", fm: "jpg", fit: "max"), data: { caption: "#{serie.name} series" }, class: "products__image") do
+                = image_tag serie.image.url(w: 700, auto: "compress")
               h1.products__title= "#{serie.name} series"
               .products__description
                 == serie.description
-
-#about.about
-  .wrap
-    .about__inner
-      .about__title= dato.settings.about_title
-      .formatted-content== dato.settings.about_description
 
 #gallery.gallery
   .js-gallery
     - dato.products.values.each do |product|
       - image = product.images.first.image
-      = link_to(image.url(w: 2000, auto: "compress,format", fm: "jpg", fit: "max"), data: { caption: "#{product.title} #{product.dimensions}" }, class: "gallery__item") do
+      = link_to(image.url(w: 2000, auto: "compress", fm: "jpg", fit: "max"), data: { caption: "#{product.title} #{product.dimensions}" }, class: "gallery__item") do
         .gallery__item__image
-          = image_tag image.url(w: 700, auto: "compress,format", fm: "jpg")
+          = image_tag image.url(w: 700, auto: "compress", fm: "jpg")
         .gallery__item__label
           p.gallery__item__title= "#{product.title} #{product.dimensions}"
-          p= "Serie #{product.series.name} — Spessore fusto #{product.shell_depth}mm"
+          p= "#{I18n.t("series", name: product.series.name)} — #{I18n.t("shell_thickness")} #{product.shell_depth}mm"
 
 #artists.artists: .wrap
-  .artists__title Artisti
+  .artists__title= I18n.t("artists")
   .grid--wide
     - dato.endorsers.sort_by(&:position).each do |record|
       .grid__item.desk-4-12
@@ -91,7 +94,7 @@
           .green__link
             = link_to "http://www.treedom.net/it/user/73768/show", class: "button--rev" do
               i.icon--arrow
-              span Visualizza la foresta Inima!
+              span= I18n.t("see_inima_forest")
 
 #contacts.contacts
   .wrap
@@ -106,19 +109,19 @@
         .contacts__form
           form.form#js-contact-form
             .form__field
-              label.form__label for="name" Il tuo nome *
-              input type="text" name="name" id="name" placeholder="Nome Cognome"
+              label.form__label for="name" = I18n.t("name") + " *"
+              input type="text" name="name" id="name" placeholder=I18n.t("name_placeholder")
             .form__field
-              label.form__label for="email" Indirizzo email *
-              input type="email" name="email" id="email" placeholder="tuo@indirizzo.com"
+              label.form__label for="email" = I18n.t("email") + " *"
+              input type="email" name="email" id="email" placeholder=I18n.t("email_placeholder")
             .form__field
-              label.form__label for="phone" Recapito telefonico
-              input type="tel" name="phone" id="phone" placeholder="+39 123-4567890"
+              label.form__label for="phone" = I18n.t("phone") + " *"
+              input type="tel" name="phone" id="phone" placeholder=I18n.t("phone_placeholder")
             .form__field
-              label.form__label for="message" Messaggio *
-              textarea id="message" name="message" placeholder="Inserisci qui il tuo messaggio"
+              label.form__label for="message" = I18n.t("message") + " *"
+              textarea id="message" name="message" placeholder=I18n.t("message_placeholder")
 
             .form__actions
               button.button
                 i.icon--send
-                span Invia richiesta
+                span= I18n.t("send_request")
